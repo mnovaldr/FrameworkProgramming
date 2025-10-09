@@ -2,25 +2,131 @@
 <html>
 <head>
     <title>Detail Warga</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .detail-section {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .detail-section p {
+            margin: 12px 0;
+            font-size: 1.05rem;
+        }
+
+        .detail-section strong {
+            color: #2980b9;
+            min-width: 180px;
+            display: inline-block;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #e0e0e0;
+            margin: 30px auto;
+            width: 80%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .pengaduan-list {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .pengaduan-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .pengaduan-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pengaduan-list li:last-child {
+            border-bottom: none;
+        }
+
+        .pengaduan-list li strong {
+            color: #e74c3c;
+        }
+
+        .empty-pengaduan {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <h1>Detail Warga</h1>
-    <p><strong>Nama Lengkap:</strong> {{ object.nama_lengkap }}</p>
-    <p><strong>NIK:</strong> {{ object.nik }}</p>
-    <p><strong>Alamat:</strong> {{ object.alamat }}</p>
-    <p><strong>No Telepon:</strong> {{ object.no_telepon }}</p>
-    <p><strong>Tanggal Registrasi:</strong> {{ object.tanggal_registrasi }}</p>
+
+    <div class="detail-section">
+        <p><strong>Nama Lengkap:</strong> {{ object.nama_lengkap }}</p>
+        <p><strong>NIK:</strong> {{ object.nik }}</p>
+        <p><strong>Alamat:</strong> {{ object.alamat }}</p>
+        <p><strong>No Telepon:</strong> {{ object.no_telepon }}</p>
+        <p><strong>Tanggal Registrasi:</strong> {{ object.tanggal_registrasi|date:"d F Y" }}</p>
+    </div>
 
     <hr>
-    <h2>Daftar Pengaduan:</h2>
-    <ul>
-        {% for aduan in object.pengaduan.all %}
-            <li><strong>{{ aduan.judul }}</strong> - {{ aduan.get_status_display }}</li>
-        {% empty %}
-            <li>Tidak ada pengaduan</li>
-        {% endfor %}
-    </ul>
 
-    <a href="{% url 'warga-list' %}">← Kembali ke Daftar Warga</a>
+    <h2>Daftar Pengaduan:</h2>
+    <div class="pengaduan-list">
+        <ul>
+            {% for aduan in object.pengaduan.all %}
+                <li><strong>{{ aduan.judul }}</strong> – {{ aduan.get_status_display }}</li>
+            {% empty %}
+                <li class="empty-pengaduan">Tidak ada pengaduan</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{% url 'warga-list' %}" class="back-link">← Kembali ke Daftar Warga</a>
 </body>
 </html>

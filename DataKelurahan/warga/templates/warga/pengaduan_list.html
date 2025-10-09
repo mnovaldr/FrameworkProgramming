@@ -2,11 +2,82 @@
 <html>
 <head>
     <title>Daftar Pengaduan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        table {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background-color: #f5f9ff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .empty-row td {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <h1>Daftar Semua Pengaduan</h1>
 
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table>
         <thead>
             <tr>
                 <th>Judul</th>
@@ -26,14 +97,13 @@
                     <td>{{ aduan.tanggal_lapor|date:"d M Y H:i" }}</td>
                 </tr>
             {% empty %}
-                <tr>
+                <tr class="empty-row">
                     <td colspan="5">Belum ada pengaduan yang terdaftar.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <br>
-    <a href="{% url 'warga-list' %}">← Kembali ke Daftar Warga</a>
+    <a href="{% url 'warga-list' %}" class="back-link">← Kembali ke Daftar Warga</a>
 </body>
 </html>

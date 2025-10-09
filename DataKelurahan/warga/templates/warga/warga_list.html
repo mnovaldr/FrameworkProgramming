@@ -2,6 +2,59 @@
 <html>
 <head>
     <title>Daftar Warga</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        li {
+            background-color: #fff;
+            margin-bottom: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.2s ease;
+        }
+
+        li:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <h1>Daftar Warga</h1>
@@ -11,10 +64,10 @@
                 <a href="{% url 'warga-detail' warga.pk %}">
                     {{ warga.nama_lengkap }}
                 </a> 
-                - NIK: {{ warga.nik }}
+                – NIK: {{ warga.nik }}
             </li>
         {% empty %}
-            <li>Belum ada data warga</li>
+            <li class="empty-message">Belum ada data warga</li>
         {% endfor %}
     </ul>
 </body>
