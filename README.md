@@ -101,6 +101,3 @@ Tambahkan nama pelapor (`aduan.pelapor.nama_lengkap`) pada tiap item.
 <img width="2880" height="1636" alt="image" src="https://github.com/user-attachments/assets/3f5e58a6-a498-4ec2-9a32-bd002913e749" />
 
 ---
-
-````
-
