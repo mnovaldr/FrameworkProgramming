@@ -11,6 +11,16 @@
     <p><strong>No Telepon:</strong> {{ object.no_telepon }}</p>
     <p><strong>Tanggal Registrasi:</strong> {{ object.tanggal_registrasi }}</p>
 
+    <hr>
+    <h2>Daftar Pengaduan:</h2>
+    <ul>
+        {% for aduan in object.pengaduan.all %}
+            <li><strong>{{ aduan.judul }}</strong> - {{ aduan.get_status_display }}</li>
+        {% empty %}
+            <li>Tidak ada pengaduan</li>
+        {% endfor %}
+    </ul>
+
     <a href="{% url 'warga-list' %}">← Kembali ke Daftar Warga</a>
 </body>
 </html>
