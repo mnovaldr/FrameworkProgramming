@@ -88,7 +88,7 @@ Tambahkan beberapa data pengaduan melalui admin.
 ## ✅ Hasil
 
 Halaman detail warga kini menampilkan daftar pengaduan yang dilaporkan warga tersebut.
-<img width="2880" height="1615" alt="image" src="https://github.com/user-attachments/assets/1c555693-770b-4e4c-ac52-65c84e4d8afb" />
+<img width="2880" height="1615" alt="image" src="https://github.com/user-attachments/assets/35c7e0c7-a781-464b-b6f6-e0a2ff003298" />
 
 
 ---
@@ -98,6 +98,6 @@ Halaman detail warga kini menampilkan daftar pengaduan yang dilaporkan warga ter
 Buat halaman `/warga/pengaduan/` untuk menampilkan **semua pengaduan** dengan `ListView`.
 Tambahkan nama pelapor (`aduan.pelapor.nama_lengkap`) pada tiap item.
 
-<img width="2880" height="1636" alt="image" src="https://github.com/user-attachments/assets/3f5e58a6-a498-4ec2-9a32-bd002913e749" />
+<img width="2870" height="1627" alt="image" src="https://github.com/user-attachments/assets/09aa9029-3657-4fb4-95da-77362b999800" />
 
 ---
