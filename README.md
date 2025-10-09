@@ -1,57 +1,45 @@
-# 📘 **P1 — Fondasi Django & Class-Based Views (ListView)**
+# 📘 **P2 — Relasi Model & QuerySet Lanjutan**
 
-````markdown
-# 🧱 Pertemuan 1 — Fondasi Django & Migrasi ke Class-Based Views (CBV)
+```markdown
+# 🔗 Pertemuan 2 — Relasi Model & QuerySet Lanjutan
 
 ## 🎯 Tujuan Pembelajaran
-- Memahami arsitektur MVT (Model–View–Template)
-- Membuat proyek Django dan aplikasi pertama
-- Membuat model `Warga` dan melakukan migrasi
-- Mengimplementasikan tampilan daftar warga dengan `ListView`
+- Memahami relasi One-to-Many menggunakan `ForeignKey`
+- Membuat model `Pengaduan` yang terhubung ke `Warga`
+- Menampilkan daftar pengaduan per warga
+- Menggunakan QuerySet untuk memfilter data
 
 ---
 
-## 🧩 Studi Kasus: Aplikasi Warga Kelurahan
-Aplikasi sederhana untuk mengelola data warga dan pengumuman di lingkungan kelurahan.  
-Pada tahap ini kita akan menampilkan daftar warga.
+## 🧩 Studi Kasus
+Setiap warga dapat memiliki banyak pengaduan.
 
 ---
 
 ## ⚙️ Langkah Praktikum
 
-### 1️⃣ Setup Awal
-```bash
-python -m venv env
-source env/bin/activate  # Windows: env\Scripts\activate
-pip install django
-django-admin startproject DataKelurahan
-cd DataKelurahan
-python manage.py startapp warga
-````
-
-Tambahkan `'warga'` di `data_kelurahan/settings.py` → `INSTALLED_APPS`.
-
----
-
-### 2️⃣ Membuat Model Warga (`warga/models.py`)
-
+### 1️⃣ Tambahkan Model Pengaduan
+`warga/models.py`
 ```python
-from django.db import models
-
-class Warga(models.Model):
-    nik = models.CharField(max_length=16, unique=True)
-    nama_lengkap = models.CharField(max_length=100)
-    alamat = models.TextField()
-    no_telepon = models.CharField(max_length=15, blank=True)
-    tanggal_registrasi = models.DateTimeField(auto_now_add=True)
+class Pengaduan(models.Model):
+    STATUS_CHOICES = [
+        ('BARU', 'Baru'),
+        ('DIPROSES', 'Diproses'),
+        ('SELESAI', 'Selesai'),
+    ]
+    judul = models.CharField(max_length=200)
+    deskripsi = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='BARU')
+    tanggal_lapor = models.DateTimeField(auto_now_add=True)
+    pelapor = models.ForeignKey(Warga, on_delete=models.CASCADE, related_name='pengaduan')
 
     def __str__(self):
-        return self.nama_lengkap
-```
+        return self.judul
+````
 
 ---
 
-### 3️⃣ Migrasi Database
+### 2️⃣ Migrasi Database
 
 ```bash
 python manage.py makemigrations
@@ -60,73 +48,37 @@ python manage.py migrate
 
 ---
 
-### 4️⃣ Tambah Model di Admin
+### 3️⃣ Daftarkan Model di Admin
 
 `warga/admin.py`
 
 ```python
 from django.contrib import admin
-from .models import Warga
+from .models import Warga, Pengaduan
 
 admin.site.register(Warga)
+admin.site.register(Pengaduan)
 ```
 
-Kemudian:
-
-```bash
-python manage.py createsuperuser
-python manage.py runserver
-```
-
-Login ke `/admin/` dan tambahkan 3 data warga.
+Tambahkan beberapa data pengaduan melalui admin.
 
 ---
 
-### 5️⃣ Implementasi ListView
+### 4️⃣ Tampilkan Pengaduan di Halaman Detail Warga
 
-`warga/views.py`
-
-```python
-from django.views.generic import ListView
-from .models import Warga
-
-class WargaListView(ListView):
-    model = Warga
-    template_name = 'warga/warga_list.html'
-```
-
-`warga/urls.py`
-
-```python
-from django.urls import path
-from .views import WargaListView
-
-urlpatterns = [
-    path('', WargaListView.as_view(), name='warga-list'),
-]
-```
-
-`data_kelurahan/urls.py`
-
-```python
-from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('warga/', include('warga.urls')),
-]
-```
-
-`warga/templates/warga/warga_list.html`
+`warga/templates/warga/warga_detail.html`
 
 ```html
-<h1>Daftar Warga</h1>
+<h1>{{ object.nama_lengkap }}</h1>
+<p>NIK: {{ object.nik }}</p>
+<p>Alamat: {{ object.alamat }}</p>
+
+<h2>Daftar Pengaduan:</h2>
 <ul>
-{% for warga in object_list %}
-    <li>{{ warga.nama_lengkap }} - NIK: {{ warga.nik }}</li>
+{% for aduan in object.pengaduan.all %}
+    <li><strong>{{ aduan.judul }}</strong> ({{ aduan.get_status_display }})</li>
 {% empty %}
-    <li>Belum ada data warga</li>
+    <li>Belum ada pengaduan</li>
 {% endfor %}
 </ul>
 ```
@@ -135,20 +87,20 @@ urlpatterns = [
 
 ## ✅ Hasil
 
-Akses: [http://127.0.0.1:8000/warga/](http://127.0.0.1:8000/warga/)
-Menampilkan daftar warga dari database.
+Halaman detail warga kini menampilkan daftar pengaduan yang dilaporkan warga tersebut.
+<img width="2880" height="1615" alt="image" src="https://github.com/user-attachments/assets/1c555693-770b-4e4c-ac52-65c84e4d8afb" />
 
-<img width="2865" height="1627" alt="image" src="https://github.com/user-attachments/assets/f7e4c793-3d54-489a-ad93-369d40b4c15b" />
 
 ---
 
 ## 💡 Challenge
 
-Buat halaman **Detail Warga** menggunakan `DetailView` dan tambahkan tautan dari daftar.
+Buat halaman `/warga/pengaduan/` untuk menampilkan **semua pengaduan** dengan `ListView`.
+Tambahkan nama pelapor (`aduan.pelapor.nama_lengkap`) pada tiap item.
 
-<img width="2876" height="1633" alt="image" src="https://github.com/user-attachments/assets/266532ee-89a2-442c-87d2-59c7c0caf1e2" />
-<img width="2870" height="1621" alt="image" src="https://github.com/user-attachments/assets/9f3c4743-8d2e-4525-b001-0b32d583dae8" />
-
+<img width="2880" height="1636" alt="image" src="https://github.com/user-attachments/assets/3f5e58a6-a498-4ec2-9a32-bd002913e749" />
 
 ---
+
+````
 
