@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,3 +122,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+UNFOLD = {
+    "SITE_TITLE": "Data Warga Kelurahan",
+    "SITE_HEADER": "Dashboard Kel Sekarpuro",
+    "SITE_SUBHEADER": "Data Warga Kelurahan",
+    "BORDER_RADIUS": "8px",
+
+    
+}
