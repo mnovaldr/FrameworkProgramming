@@ -15,60 +15,120 @@
             text-align: center;
             color: #2c3e50;
             margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         ul {
             list-style-type: none;
             padding: 0;
-            max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 30px;
         }
 
         li {
             background-color: #fff;
-            margin-bottom: 12px;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: box-shadow 0.2s ease;
+            margin-bottom: 14px;
+            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         li:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
         }
 
-        a {
+        .warga-link {
             text-decoration: none;
-            color: #3498db;
-            font-weight: bold;
+            color: #2c3e50;
+            font-weight: 600;
             font-size: 1.1em;
+            flex: 1 1 auto;
+            min-width: 200px;
         }
 
-        a:hover {
-            color: #2980b9;
+        .warga-link:hover {
+            color: #3498db;
             text-decoration: underline;
+        }
+
+        .nik {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            margin-left: 12px;
+            white-space: nowrap;
         }
 
         .empty-message {
             text-align: center;
             color: #7f8c8d;
             font-style: italic;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .add-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2ecc71;
+            color: white !important;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .add-link:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            text-decoration: none !important;
+        }
+
+        /* Responsif: tampilan rapi di layar kecil */
+        @media (max-width: 600px) {
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nik {
+                margin-left: 0;
+                margin-top: 8px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Daftar Warga</h1>
-    <ul>
-        {% for warga in object_list %}
-            <li>
-                <a href="{% url 'warga-detail' warga.pk %}">
-                    {{ warga.nama_lengkap }}
-                </a> 
-                – NIK: {{ warga.nik }}
-            </li>
-        {% empty %}
-            <li class="empty-message">Belum ada data warga</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Daftar Warga</h1>
+        <ul>
+            {% for warga in object_list %}
+                <li>
+                    <a href="{% url 'warga-detail' warga.pk %}" class="warga-link">
+                        {{ warga.nama_lengkap }}
+                    </a>
+                    <span class="nik">NIK: {{ warga.nik }}</span>
+                </li>
+            {% empty %}
+                <li class="empty-message">Belum ada data warga</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'warga-tambah' %}" class="add-link">+ Tambah Warga</a>
+    </div>
 </body>
 </html>
