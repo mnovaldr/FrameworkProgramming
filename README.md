@@ -1,103 +1,59 @@
-# 📘 **P2 — Relasi Model & QuerySet Lanjutan**
+## 💡 Challenge P3 — Form Tambah Data Warga & Pengaduan
 
-```markdown
-# 🔗 Pertemuan 2 — Relasi Model & QuerySet Lanjutan
-
-## 🎯 Tujuan Pembelajaran
-- Memahami relasi One-to-Many menggunakan `ForeignKey`
-- Membuat model `Pengaduan` yang terhubung ke `Warga`
-- Menampilkan daftar pengaduan per warga
-- Menggunakan QuerySet untuk memfilter data
+### 🎯 Tujuan
+Membuat form input data menggunakan Django `ModelForm` dan `CreateView`.
 
 ---
 
-## 🧩 Studi Kasus
-Setiap warga dapat memiliki banyak pengaduan.
+### 🧩 Langkah-langkah
 
----
-
-## ⚙️ Langkah Praktikum
-
-### 1️⃣ Tambahkan Model Pengaduan
-`warga/models.py`
+#### 1️⃣ Buat forms.py
 ```python
-class Pengaduan(models.Model):
-    STATUS_CHOICES = [
-        ('BARU', 'Baru'),
-        ('DIPROSES', 'Diproses'),
-        ('SELESAI', 'Selesai'),
-    ]
-    judul = models.CharField(max_length=200)
-    deskripsi = models.TextField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='BARU')
-    tanggal_lapor = models.DateTimeField(auto_now_add=True)
-    pelapor = models.ForeignKey(Warga, on_delete=models.CASCADE, related_name='pengaduan')
+class WargaForm(forms.ModelForm):
+    class Meta:
+        model = Warga
+        fields = ['nik', 'nama_lengkap', 'alamat', 'no_telepon']
 
-    def __str__(self):
-        return self.judul
+class PengaduanForm(forms.ModelForm):
+    class Meta:
+        model = Pengaduan
+        fields = ['judul', 'deskripsi', 'status', 'pelapor']
 ````
 
----
-
-### 2️⃣ Migrasi Database
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
----
-
-### 3️⃣ Daftarkan Model di Admin
-
-`warga/admin.py`
+#### 2️⃣ Tambahkan `CreateView`
 
 ```python
-from django.contrib import admin
-from .models import Warga, Pengaduan
-
-admin.site.register(Warga)
-admin.site.register(Pengaduan)
+class PengaduanCreateView(CreateView):
+    model = Pengaduan
+    form_class = PengaduanForm
+    template_name = 'warga/pengaduan_form.html'
+    success_url = reverse_lazy('pengaduan-list')
 ```
 
-Tambahkan beberapa data pengaduan melalui admin.
+#### 3️⃣ Tambahkan URL
 
----
+```python
+path('pengaduan/tambah/', PengaduanCreateView.as_view(), name='pengaduan-tambah'),
+```
 
-### 4️⃣ Tampilkan Pengaduan di Halaman Detail Warga
-
-`warga/templates/warga/warga_detail.html`
+#### 4️⃣ Template
 
 ```html
-<h1>{{ object.nama_lengkap }}</h1>
-<p>NIK: {{ object.nik }}</p>
-<p>Alamat: {{ object.alamat }}</p>
-
-<h2>Daftar Pengaduan:</h2>
-<ul>
-{% for aduan in object.pengaduan.all %}
-    <li><strong>{{ aduan.judul }}</strong> ({{ aduan.get_status_display }})</li>
-{% empty %}
-    <li>Belum ada pengaduan</li>
-{% endfor %}
-</ul>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Simpan</button>
+</form>
 ```
 
 ---
 
-## ✅ Hasil
+### ✅ Hasil
 
-Halaman detail warga kini menampilkan daftar pengaduan yang dilaporkan warga tersebut.
-<img width="2880" height="1615" alt="image" src="https://github.com/user-attachments/assets/1c555693-770b-4e4c-ac52-65c84e4d8afb" />
+* `/warga/tambah/` menambahkan warga baru
+* `/warga/pengaduan/tambah/` menambahkan pengaduan baru
 
-
----
-
-## 💡 Challenge
-
-Buat halaman `/warga/pengaduan/` untuk menampilkan **semua pengaduan** dengan `ListView`.
-Tambahkan nama pelapor (`aduan.pelapor.nama_lengkap`) pada tiap item.
-
-<img width="2880" height="1636" alt="image" src="https://github.com/user-attachments/assets/3f5e58a6-a498-4ec2-9a32-bd002913e749" />
+Setelah klik **Simpan**, data langsung tersimpan dan diarahkan ke halaman daftar.
 
 ---
+
