@@ -14,13 +14,61 @@
         h1 {
             text-align: center;
             color: #2c3e50;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-size: 28px;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 850px;
             margin: 0 auto;
+        }
+
+        /* Tombol navigasi atas */
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .btn-pengaduan {
+            background-color: #9b59b6;
+            color: white !important;
+        }
+
+        .btn-pengaduan:hover {
+            background-color: #8e44ad;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .add-link {
+            background-color: #2ecc71;
+            color: white !important;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 10px 20px;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .add-link:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            text-decoration: none !important;
         }
 
         ul {
@@ -31,83 +79,125 @@
 
         li {
             background-color: #fff;
-            margin-bottom: 14px;
-            padding: 16px;
+            margin-bottom: 16px;
+            padding: 18px;
             border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-            transition: box-shadow 0.25s ease, transform 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.25s ease, transform 0.2s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 12px;
         }
 
         li:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
             transform: translateY(-2px);
         }
 
-        .warga-link {
-            text-decoration: none;
-            color: #2c3e50;
-            font-weight: 600;
-            font-size: 1.1em;
-            flex: 1 1 auto;
+        .warga-info {
+            flex: 1 1 250px;
             min-width: 200px;
         }
 
-        .warga-link:hover {
+        .warga-name {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .warga-name:hover {
             color: #3498db;
             text-decoration: underline;
         }
 
         .nik {
             color: #7f8c8d;
-            font-size: 0.95em;
-            margin-left: 12px;
+            font-size: 0.92em;
+            margin-top: 4px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-align: center;
+            transition: all 0.2s ease;
             white-space: nowrap;
+            min-width: 70px;
+        }
+
+        .btn-detail {
+            background-color: #3498db;
+            color: white !important;
+        }
+
+        .btn-detail:hover {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .btn-edit {
+            background-color: #f39c12;
+            color: white !important;
+        }
+
+        .btn-edit:hover {
+            background-color: #d35400;
+            transform: translateY(-1px);
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white !important;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
         }
 
         .empty-message {
             text-align: center;
             color: #7f8c8d;
             font-style: italic;
-            padding: 20px;
+            padding: 24px;
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
-        .add-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #2ecc71;
-            color: white !important;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 10px;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        .add-link:hover {
-            background-color: #27ae60;
-            transform: translateY(-2px);
-            text-decoration: none !important;
-        }
-
-        /* Responsif: tampilan rapi di layar kecil */
+        /* Responsif */
         @media (max-width: 600px) {
-            li {
+            .top-actions {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
 
-            .nik {
-                margin-left: 0;
-                margin-top: 8px;
-                font-size: 0.9em;
+            li {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .actions {
+                justify-content: flex-start;
+                margin-top: 12px;
+            }
+
+            .btn {
+                flex: 1 1 auto;
+                text-align: center;
+                min-width: auto;
             }
         }
     </style>
@@ -115,20 +205,32 @@
 <body>
     <div class="container">
         <h1>Daftar Warga</h1>
+
+        <!-- Tombol navigasi atas -->
+        <div class="top-actions">
+            <a href="{% url 'pengaduan-list' %}" class="btn-nav btn-pengaduan">📄 Lihat Daftar Pengaduan</a>
+            <a href="{% url 'warga-tambah' %}" class="add-link">+ Tambah Warga</a>
+        </div>
+
         <ul>
             {% for warga in object_list %}
                 <li>
-                    <a href="{% url 'warga-detail' warga.pk %}" class="warga-link">
-                        {{ warga.nama_lengkap }}
-                    </a>
-                    <span class="nik">NIK: {{ warga.nik }}</span>
+                    <div class="warga-info">
+                        <a href="{% url 'warga-detail' warga.pk %}" class="warga-name">
+                            {{ warga.nama_lengkap }}
+                        </a>
+                        <div class="nik">NIK: {{ warga.nik }}</div>
+                    </div>
+                    <div class="actions">
+                        <a href="{% url 'warga-detail' warga.pk %}" class="btn btn-detail">Detail</a>
+                        <a href="{% url 'warga-edit' warga.pk %}" class="btn btn-edit">Edit</a>
+                        <a href="{% url 'warga-hapus' warga.pk %}" class="btn btn-delete">Hapus</a>
+                    </div>
                 </li>
             {% empty %}
                 <li class="empty-message">Belum ada data warga</li>
             {% endfor %}
         </ul>
-
-        <a href="{% url 'warga-tambah' %}" class="add-link">+ Tambah Warga</a>
     </div>
 </body>
 </html>

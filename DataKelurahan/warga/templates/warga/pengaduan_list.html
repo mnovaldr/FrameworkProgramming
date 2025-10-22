@@ -103,6 +103,38 @@
             color: #2c3e50;
         }
 
+        .aksi-cell {
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .aksi-cell a {
+            margin: 0 6px;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .aksi-cell a:first-child {
+            color: #3498db;
+        }
+
+        .aksi-cell a:last-child {
+            color: #e74c3c;
+        }
+
+        .aksi-cell a:hover:first-child {
+            background-color: #e8f4fc;
+            color: #2980b9;
+        }
+
+        .aksi-cell a:hover:last-child {
+            background-color: #fdf2f2;
+            color: #c0392b;
+        }
+
         .empty-row td {
             text-align: center;
             color: #7f8c8d;
@@ -119,13 +151,20 @@
             }
 
             th, td {
-                padding: 12px 10px;
+                padding: 12px 8px;
                 font-size: 0.85rem;
+            }
+
+            .aksi-cell {
+                padding: 12px 6px;
             }
 
             h1 {
                 font-size: 1.6rem;
             }
+
+            /* Sembunyikan beberapa kolom jika perlu (opsional) */
+            /* Misal: sembunyikan deskripsi panjang di HP */
         }
     </style>
 </head>
@@ -146,6 +185,7 @@
                     <th>Status</th>
                     <th>Pelapor</th>
                     <th>Tanggal Lapor</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -156,10 +196,14 @@
                         <td>{{ aduan.get_status_display }}</td>
                         <td>{{ aduan.pelapor.nama_lengkap }}</td>
                         <td>{{ aduan.tanggal_lapor|date:"d M Y H:i" }}</td>
+                        <td class="aksi-cell">
+                            <a href="{% url 'pengaduan-edit' aduan.pk %}">Edit</a> |
+                            <a href="{% url 'pengaduan-hapus' aduan.pk %}">Hapus</a>
+                        </td>
                     </tr>
                 {% empty %}
                     <tr class="empty-row">
-                        <td colspan="5">Belum ada pengaduan yang terdaftar.</td>
+                        <td colspan="6">Belum ada pengaduan yang terdaftar.</td>
                     </tr>
                 {% endfor %}
             </tbody>

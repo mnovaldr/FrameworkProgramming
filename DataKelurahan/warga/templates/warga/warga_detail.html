@@ -87,19 +87,71 @@
             font-style: italic;
         }
 
-        .back-link {
-            display: block;
-            text-align: center;
+        /* Action buttons container */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
             margin-top: 30px;
-            color: #3498db;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
+            flex-wrap: wrap;
         }
 
-        .back-link:hover {
-            text-decoration: underline;
-            color: #2980b9;
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.25s ease;
+            display: inline-block;
+            min-width: 100px;
+        }
+
+        .btn-edit {
+            background-color: #3498db;
+            color: white !important;
+        }
+
+        .btn-edit:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white !important;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-back {
+            background-color: #ecf0f1;
+            color: #7f8c8d !important;
+        }
+
+        .btn-back:hover {
+            background-color: #d5dbdb;
+            color: #2c3e50 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 600px) {
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
         }
     </style>
 </head>
@@ -127,6 +179,11 @@
         </ul>
     </div>
 
-    <a href="{% url 'warga-list' %}" class="back-link">← Kembali ke Daftar Warga</a>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="{% url 'warga-edit' object.pk %}" class="btn btn-edit">✏️ Edit</a>
+        <a href="{% url 'warga-hapus' object.pk %}" class="btn btn-delete">🗑️ Hapus</a>
+        <a href="{% url 'warga-list' %}" class="btn btn-back">← Kembali</a>
+    </div>
 </body>
 </html>

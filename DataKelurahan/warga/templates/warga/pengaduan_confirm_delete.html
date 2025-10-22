@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hapus Pengaduan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            max-width: 520px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+
+        strong {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        button[type="submit"] {
+            padding: 12px 28px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.25s, transform 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        a {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #ecf0f1;
+            color: #7f8c8d !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.25s, transform 0.2s;
+        }
+
+        a:hover {
+            background-color: #d5dbdb;
+            color: #2c3e50 !important;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Konfirmasi Hapus Pengaduan</h1>
+        <p>Apakah Anda yakin ingin menghapus pengaduan: <strong>{{ object.judul }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Ya, Hapus</button>
+            <a href="{% url 'pengaduan-list' %}">Batal</a>
+        </form>
+    </div>
+</body>
+</html>
