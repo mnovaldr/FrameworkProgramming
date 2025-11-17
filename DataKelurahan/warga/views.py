@@ -4,25 +4,43 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from .models import Warga, Pengaduan
 from .forms import WargaForm, PengaduanForm
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+# from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .serializers import WargaSerializer, PengaduanSerializer
+from rest_framework import viewsets
 
 
-class WargaListAPIView(ListAPIView):
-    queryset = Warga.objects.all()
+# --- API untuk Warga ---
+class WargaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint CRUD untuk data Warga
+    """
+    queryset = Warga.objects.all().order_by('-id')
     serializer_class = WargaSerializer
 
-class WargaDetailAPIView(RetrieveAPIView):
-    queryset = Warga.objects.all()
-    serializer_class = WargaSerializer
 
-class PengaduanListAPIView(ListAPIView):
-    queryset = Pengaduan.objects.all()
+# --- API untuk Pengaduan ---
+class PengaduanViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint CRUD untuk data Pengaduan
+    """
+    queryset = Pengaduan.objects.all().order_by('-id')
     serializer_class = PengaduanSerializer
 
-class PengaduanDetailAPIView(RetrieveAPIView):
-    queryset = Pengaduan.objects.all()
-    serializer_class = PengaduanSerializer
+# class WargaListAPIView(ListAPIView):
+#     queryset = Warga.objects.all()
+#     serializer_class = WargaSerializer
+
+# class WargaDetailAPIView(RetrieveAPIView):
+#     queryset = Warga.objects.all()
+#     serializer_class = WargaSerializer
+
+# class PengaduanListAPIView(ListAPIView):
+#     queryset = Pengaduan.objects.all()
+#     serializer_class = PengaduanSerializer
+
+# class PengaduanDetailAPIView(RetrieveAPIView):
+#     queryset = Pengaduan.objects.all()
+#     serializer_class = PengaduanSerializer
 
 class WargaListView(ListView):
     model = Warga
