@@ -11,6 +11,18 @@ from unfold.admin import ModelAdmin
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+@admin.register(User)
+class UserAdmin(BaseUserAdmin, ModelAdmin):
+    # Forms loaded from `unfold.forms`
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+
+
+@admin.register(Group)
+class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+    pass
+
 class WargaAdmin(ModelAdmin):
     list_display = ['nik', 'nama_lengkap', 'alamat', 'no_telepon']
     search_fields = ['nik', 'nama_lengkap']

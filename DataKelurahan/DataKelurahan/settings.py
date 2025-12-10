@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'warga',
     'rest_framework',
+    'rest_framework.authtoken',
+    'warga',
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,13 @@ UNFOLD = {
     "BORDER_RADIUS": "8px",
 
     
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
